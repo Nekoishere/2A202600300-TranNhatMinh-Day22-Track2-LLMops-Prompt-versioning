@@ -1,0 +1,149 @@
+Question: What are the three main types of machine learning?
+Answer: The three main types of machine learning are supervised learning, unsupervised learning, and reinforcement learning. Supervised learning trains models from labeled examples, unsupervised learning finds patterns in unlabeled data, and reinforcement learning trains agents to make decisions by receiving rewards or penalties from an environment.
+
+Question: What is overfitting in machine learning?
+Answer: Overfitting happens when a model learns the training data too closely, including noise or accidental patterns, instead of learning general rules. An overfit model performs very well on training data but poorly on new or unseen data.
+
+Question: Explain the bias-variance tradeoff.
+Answer: The bias-variance tradeoff describes the balance between underfitting and overfitting. High bias means a model is too simple and misses important patterns, while high variance means a model is too sensitive to the training data. A good model balances both so it generalizes well to new data.
+
+Question: How does regularization prevent overfitting?
+Answer: Regularization prevents overfitting by adding a penalty for overly complex model parameters. Techniques such as L1 regularization, L2 regularization, dropout, and weight decay discourage the model from relying too heavily on specific features or memorizing the training data.
+
+Question: What is cross-validation?
+Answer: Cross-validation is a model evaluation method that splits the data into multiple folds. The model is trained on some folds and validated on the remaining fold, repeating the process several times. This gives a more reliable estimate of how well the model generalizes.
+
+Question: What is backpropagation?
+Answer: Backpropagation is the algorithm used to train neural networks by computing gradients of the loss with respect to model parameters. It applies the chain rule from calculus to propagate errors backward through the network, then updates weights using an optimizer such as gradient descent.
+
+Question: What are Convolutional Neural Networks primarily used for?
+Answer: Convolutional Neural Networks, or CNNs, are primarily used for processing grid-like data such as images. They are widely used for image classification, object detection, facial recognition, medical imaging, and other computer vision tasks.
+
+Question: How do LSTM networks address the vanishing gradient problem?
+Answer: LSTM networks address the vanishing gradient problem by using a memory cell and gates that control what information is stored, forgotten, and output. These gates allow gradients and useful information to flow across long sequences more effectively than in basic recurrent neural networks.
+
+Question: What activation functions are commonly used in neural networks?
+Answer: Common activation functions include ReLU, sigmoid, tanh, softmax, GELU, and Leaky ReLU. ReLU and GELU are common in hidden layers, sigmoid is often used for binary outputs, and softmax is used for multi-class probability outputs.
+
+Question: What is the role of pooling layers in CNNs?
+Answer: Pooling layers reduce the spatial size of feature maps in convolutional neural networks. They lower computation, reduce sensitivity to small shifts in the input, and help summarize important features. Common pooling methods include max pooling and average pooling.
+
+Question: What is the transformer architecture?
+Answer: The transformer architecture is a neural network design based on self-attention rather than recurrence. It processes tokens in parallel, uses attention to model relationships between tokens, and usually includes positional encodings, multi-head attention, feed-forward layers, residual connections, and layer normalization.
+
+Question: What are word embeddings?
+Answer: Word embeddings are dense vector representations of words or tokens. They map text into numerical vectors so that words with similar meanings or usage patterns are close together in vector space. Examples include Word2Vec, GloVe, FastText, and contextual embeddings from transformer models.
+
+Question: What is transfer learning in NLP?
+Answer: Transfer learning in NLP means starting with a model pretrained on large text corpora and adapting it to a specific task. Instead of training from scratch, developers fine-tune or prompt the pretrained model for tasks such as classification, summarization, translation, or question answering.
+
+Question: How does BERT handle language understanding?
+Answer: BERT handles language understanding by using a bidirectional transformer encoder that reads context from both the left and right sides of a token. It was pretrained with objectives such as masked language modeling and next sentence prediction, making it strong for understanding-focused NLP tasks.
+
+Question: What is self-attention in transformers?
+Answer: Self-attention is a mechanism that lets each token in a sequence compare itself with other tokens and assign importance weights to them. This allows transformers to capture relationships, dependencies, and context across the whole input sequence.
+
+Question: What is GPT and how is it trained?
+Answer: GPT stands for Generative Pretrained Transformer. It is a transformer-based language model trained mainly with next-token prediction on large text datasets. After pretraining, GPT-style models may be further improved with supervised fine-tuning, instruction tuning, and human preference optimization methods.
+
+Question: What is instruction tuning?
+Answer: Instruction tuning is the process of fine-tuning a language model on examples written as instructions and desired responses. It teaches the model to follow user requests more reliably and to produce outputs that match task descriptions.
+
+Question: What is RLHF?
+Answer: RLHF stands for Reinforcement Learning from Human Feedback. It aligns language models with human preferences by collecting human rankings or feedback, training a reward model, and optimizing the language model to produce responses that score well under that reward model.
+
+Question: What is chain-of-thought prompting?
+Answer: Chain-of-thought prompting is a prompting technique that encourages a model to reason through intermediate steps before giving an answer. It can improve performance on multi-step reasoning tasks, though deployed systems may summarize reasoning instead of exposing every internal step.
+
+Question: What is the context length of GPT-4?
+Answer: The context length of GPT-4 depends on the specific GPT-4 model version. Earlier GPT-4 variants commonly supported 8,000-token and 32,000-token context windows, while later GPT-4-family models may support larger windows. Context length means the maximum amount of input and output text the model can consider in one request.
+
+Question: What is Retrieval-Augmented Generation?
+Answer: Retrieval-Augmented Generation, or RAG, is a technique that combines information retrieval with text generation. A system first retrieves relevant documents from an external knowledge source, then passes that context to a language model so it can generate a more grounded answer.
+
+Question: What are the main components of a RAG pipeline?
+Answer: The main components of a RAG pipeline are a document loader, text splitter, embedding model, vector store or search index, retriever, prompt template, language model, and output parser. Evaluation and tracing tools are often added to monitor answer quality.
+
+Question: What is dense retrieval?
+Answer: Dense retrieval is an information retrieval method that represents queries and documents as dense numerical vectors. It retrieves documents by comparing vector similarity, allowing the system to find semantically related content even when exact keywords do not match.
+
+Question: Why is chunking strategy important in RAG?
+Answer: Chunking strategy is important in RAG because it determines how source documents are split before indexing. Chunks that are too small may lose context, while chunks that are too large may include irrelevant information. Good chunking improves retrieval precision and answer grounding.
+
+Question: What advanced RAG techniques exist beyond basic retrieval?
+Answer: Advanced RAG techniques include query rewriting, multi-query retrieval, hybrid search, reranking, parent-child retrieval, contextual compression, metadata filtering, iterative retrieval, graph-based retrieval, and agentic RAG workflows that decide when and how to retrieve additional information.
+
+Question: What are vector databases used for?
+Answer: Vector databases store and search embedding vectors. They are used for semantic search, recommendation systems, similarity search, image search, duplicate detection, and RAG systems where relevant documents must be retrieved from natural language queries.
+
+Question: What is FAISS?
+Answer: FAISS, or Facebook AI Similarity Search, is an open-source library for efficient similarity search over dense vectors. It is commonly used to build local vector indexes for retrieval tasks, including RAG pipelines.
+
+Question: How do text embeddings capture semantic meaning?
+Answer: Text embeddings capture semantic meaning by converting text into numerical vectors learned from language data. Texts with similar meanings, topics, or usage patterns tend to have vectors close together, making similarity search possible.
+
+Question: What is HNSW?
+Answer: HNSW stands for Hierarchical Navigable Small World. It is an approximate nearest neighbor search algorithm that builds a multi-layer graph structure to retrieve similar vectors quickly and accurately at large scale.
+
+Question: What is hybrid search in vector databases?
+Answer: Hybrid search combines dense vector similarity search with sparse keyword-based search, such as BM25. It improves retrieval by capturing both semantic similarity and exact keyword matches, which is useful when queries contain specific names, codes, or technical terms.
+
+Question: What is LangChain?
+Answer: LangChain is a framework for building applications with language models. It provides components for prompts, models, output parsers, retrievers, tools, memory, agents, chains, and integrations with vector stores and data sources.
+
+Question: What is LangChain Expression Language (LCEL)?
+Answer: LangChain Expression Language, or LCEL, is a declarative way to compose LangChain components using runnable objects and the pipe operator. It helps build chains that are easier to stream, batch, trace, and combine.
+
+Question: What is LangGraph?
+Answer: LangGraph is a framework in the LangChain ecosystem for building stateful, graph-based LLM workflows. It is useful for agents and multi-step applications that need branching, loops, persistence, human review, or controlled state transitions.
+
+Question: What memory types does LangChain support?
+Answer: LangChain supports several memory patterns, including conversation buffer memory, summary memory, windowed memory, entity memory, vector-store-backed memory, and custom memory implementations. These memory types help applications preserve useful context across interactions.
+
+Question: What are LangChain retrievers?
+Answer: LangChain retrievers are components that take a query and return relevant documents. They provide a standard interface over vector stores, keyword search systems, multi-query retrieval, compression retrievers, ensemble retrievers, and other retrieval strategies.
+
+Question: What is LangSmith?
+Answer: LangSmith is a platform for debugging, tracing, evaluating, and monitoring LLM applications. It helps developers inspect chain and agent runs, compare prompts or models, create datasets, run evaluations, and monitor production behavior.
+
+Question: What information do LangSmith traces capture?
+Answer: LangSmith traces capture structured information about an LLM application run, including inputs, outputs, intermediate steps, prompts, retrieved documents, tool calls, model calls, token usage, latency, errors, metadata, and nested run structure.
+
+Question: What is the LangSmith Prompt Hub?
+Answer: The LangSmith Prompt Hub is a place to store, version, share, and reuse prompts. It helps teams manage prompt templates, track changes, compare prompt versions, and connect prompts to evaluation workflows.
+
+Question: How does LangSmith help monitor production LLM applications?
+Answer: LangSmith helps monitor production LLM applications by recording traces, latency, errors, inputs, outputs, feedback, and evaluation metrics. Teams can inspect problematic runs, track regressions, compare versions, and understand how the system behaves with real users.
+
+Question: What are LangSmith datasets used for?
+Answer: LangSmith datasets are collections of examples used for testing and evaluating LLM applications. They can store inputs, expected outputs, reference answers, and metadata so teams can run repeatable evaluations across prompt, model, or pipeline versions.
+
+Question: What is RAGAS?
+Answer: RAGAS is an evaluation framework for Retrieval-Augmented Generation systems. It provides metrics that measure retrieval quality and generation quality, such as faithfulness, answer relevancy, context precision, and context recall.
+
+Question: How does RAGAS compute faithfulness?
+Answer: RAGAS computes faithfulness by checking whether the generated answer is supported by the retrieved context. It breaks the answer into claims and evaluates whether those claims can be inferred from the provided context, penalizing unsupported or hallucinated statements.
+
+Question: What is answer relevancy in RAGAS?
+Answer: Answer relevancy in RAGAS measures how well the generated answer addresses the user's question. A relevant answer stays focused on the question and avoids unnecessary or unrelated information.
+
+Question: What is context recall in RAGAS?
+Answer: Context recall in RAGAS measures whether the retrieved context contains the information needed to answer the question or match the reference answer. High context recall means the retrieval step found enough relevant evidence.
+
+Question: What inputs does RAGAS evaluation require?
+Answer: RAGAS evaluation commonly requires the user question, generated answer, retrieved contexts, and sometimes a reference answer or ground truth. The exact inputs depend on which RAGAS metrics are being computed.
+
+Question: What is Guardrails AI?
+Answer: Guardrails AI is a framework for validating and constraining LLM inputs and outputs. It can enforce schemas, check safety rules, detect policy violations, retry invalid outputs, and help ensure responses follow application requirements.
+
+Question: What is PII and why is it important to detect in LLM responses?
+Answer: PII stands for personally identifiable information, such as names, addresses, phone numbers, email addresses, identification numbers, financial details, or health information. Detecting PII in LLM responses is important for privacy, compliance, and preventing accidental disclosure of sensitive data.
+
+Question: What does structured output validation ensure?
+Answer: Structured output validation ensures that an LLM response follows a required format or schema, such as JSON with specific fields and data types. It helps downstream systems parse responses reliably and prevents malformed or incomplete outputs from entering production workflows.
+
+Question: What is Constitutional AI?
+Answer: Constitutional AI is an approach to aligning AI systems using a written set of principles or rules, sometimes called a constitution. The model uses those principles to critique, revise, and improve responses so they better follow safety and helpfulness requirements.
+
+Question: What are common AI safety concerns with LLMs?
+Answer: Common AI safety concerns with LLMs include hallucination, biased or toxic outputs, privacy leakage, prompt injection, data exfiltration, insecure tool use, misinformation, harmful instructions, overreliance by users, and lack of transparency or accountability.

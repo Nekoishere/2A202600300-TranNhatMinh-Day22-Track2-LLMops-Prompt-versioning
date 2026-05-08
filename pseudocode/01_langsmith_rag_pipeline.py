@@ -15,40 +15,28 @@ import sys
 from pathlib import Path
 
 # ── 1. Environment setup ────────────────────────────────────────────────────
-# TODO: load your .env file using python-dotenv
-# from dotenv import load_dotenv
-# load_dotenv(...)
-
-# TODO: set LangSmith environment variables BEFORE importing LangChain
-# os.environ["LANGCHAIN_TRACING_V2"]  = "true"
-# os.environ["LANGCHAIN_API_KEY"]     = "<your-langsmith-api-key>"
-# os.environ["LANGCHAIN_PROJECT"]     = "<your-project-name>"
-# os.environ["LANGCHAIN_ENDPOINT"]    = "https://api.smith.langchain.com"
+from dotenv import load_dotenv
+load_dotenv()
 
 # ── 2. LangChain + LangSmith imports ────────────────────────────────────────
-# TODO: import the libraries you need, for example:
-# from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-# from langchain_core.prompts import ChatPromptTemplate
-# from langchain_core.output_parsers import StrOutputParser
-# from langchain_core.runnables import RunnablePassthrough
-# from langchain_community.vectorstores import FAISS
-# from langchain_text_splitters import RecursiveCharacterTextSplitter
-# from langsmith import traceable
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
+from langchain_community.vectorstores import FAISS
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langsmith import traceable
 
 # ── 3. LLM and Embeddings ───────────────────────────────────────────────────
-# TODO: create a ChatOpenAI instance pointing to your endpoint
-# llm = ChatOpenAI(
-#     model=...,
-#     api_key=...,
-#     base_url=...,
-# )
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    api_key=os.getenv("OPENAI_API_KEY")
+)
 
-# TODO: create an OpenAIEmbeddings instance
-# embeddings = OpenAIEmbeddings(
-#     model=...,
-#     api_key=...,
-#     base_url=...,
-# )
+embeddings = OpenAIEmbeddings(
+    model="text-embedding-3-large",
+    api_key=os.getenv("OPENAI_API_KEY")
+)
 
 
 # ── 4. Build FAISS vector store ─────────────────────────────────────────────
@@ -62,30 +50,20 @@ def build_vectorstore():
       c) Call FAISS.from_texts(chunks, embeddings) to build the index
       d) Return the vectorstore
     """
-    # TODO: read your dataset file
-    # text = Path("data/your_dataset.txt").read_text()
+    text = (Path(__file__).parent / "data" / "dataset.txt").read_text(encoding="utf-8")
 
-    # TODO: create a text splitter and split the text
-    # splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
-    # chunks = splitter.split_text(text)
-    # print(f"Split into {len(chunks)} chunks")
+    splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    chunks = splitter.split_text(text)
+    print(f"Split into {len(chunks)} chunks")
 
-    # TODO: build and return the FAISS vectorstore
-    # vectorstore = FAISS.from_texts(chunks, embeddings)
-    # return vectorstore
-
-    pass  # remove this line when done
-
+    vectorstore = FAISS.from_texts(chunks, embeddings)
+    return vectorstore
 
 # ── 5. RAG prompt template ──────────────────────────────────────────────────
-# TODO: define a ChatPromptTemplate with:
-#   - system message: instruct the LLM to answer using ONLY the provided context
-#   - human message: the user's {question}
-#
-# RAG_PROMPT = ChatPromptTemplate.from_messages([
-#     ("system", "You are a helpful assistant. Use the context below to answer.\n\nContext:\n{context}"),
-#     ("human",  "{question}"),
-# ])
+RAG_PROMPT = ChatPromptTemplate.from_messages([
+    ("system", "You are a helpful assistant. Use the context below to answer.\n\nContext:\n{context}"),
+    ("human",  "{question}"),
+])
 
 
 # ── 6. Build the RAG chain ──────────────────────────────────────────────────
@@ -101,37 +79,27 @@ def build_rag_chain(vectorstore):
 
     Returns: (chain, retriever)
     """
-    # TODO: create a retriever from the vectorstore (k=3)
-    # retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
 
-    # TODO: define a helper to join retrieved docs into a single string
-    # def format_docs(docs):
-    #     return "\n\n".join(doc.page_content for doc in docs)
+    def format_docs(docs):
+        return "\n\n".join(doc.page_content for doc in docs)
 
-    # TODO: build and return the LCEL chain
-    # chain = (
-    #     {"context": retriever | format_docs, "question": RunnablePassthrough()}
-    #     | RAG_PROMPT
-    #     | llm
-    #     | StrOutputParser()
-    # )
-    # return chain, retriever
-
-    pass  # remove this line when done
+    chain = (
+        {"context": retriever | format_docs, "question": RunnablePassthrough()}
+        | RAG_PROMPT
+        | llm
+        | StrOutputParser()
+    )
+    return chain, retriever
 
 
 # ── 7. Traced query function ────────────────────────────────────────────────
-# TODO: decorate this function with @traceable so LangSmith captures it
-# @traceable(name="rag-query", tags=["rag", "step1"])
 def ask(chain, question: str) -> str:
     """
     Run the RAG chain on a single question.
     The @traceable decorator sends input/output/latency to LangSmith.
     """
-    # TODO: invoke the chain and return the answer
-    # return chain.invoke(question)
-    pass  # remove this line when done
-
+    return chain.invoke(question)
 
 # ── 8. Sample questions (50 total — one per topic area) ────────────────────
 SAMPLE_QUESTIONS = [
@@ -194,24 +162,17 @@ def main():
     print("  Step 1: LangSmith RAG Pipeline")
     print("=" * 60)
 
-    # TODO: build the vectorstore
-    # vectorstore = build_vectorstore()
+    vectorstore = build_vectorstore()
 
-    # TODO: build the RAG chain
-    # chain, retriever = build_rag_chain(vectorstore)
+    chain, retriever = build_rag_chain(vectorstore)
 
-    # TODO: loop through all SAMPLE_QUESTIONS, call ask(), print results
-    # for i, question in enumerate(SAMPLE_QUESTIONS, 1):
-    #     answer = ask(chain, question)
-    #     print(f"[{i:02d}/{len(SAMPLE_QUESTIONS)}] Q: {question[:60]}")
-    #     print(f"       A: {answer[:100]}\n")
+    for i, question in enumerate(SAMPLE_QUESTIONS, 1):
+        answer = ask(chain, question)
+        print(f"[{i:02d}/{len(SAMPLE_QUESTIONS)}] Q: {question[:60]}")
+        print(f"       A: {answer[:100]}\n")
 
-    # TODO: print confirmation that traces were sent
-    # print(f"✅ {len(SAMPLE_QUESTIONS)} traces sent to LangSmith project '{os.environ['LANGCHAIN_PROJECT']}'")
-    # print("   Open https://smith.langchain.com to view traces.")
-
-    pass  # remove this line when done
-
+    print(f"✅ {len(SAMPLE_QUESTIONS)} traces sent to LangSmith project '{os.environ['LANGSMITH_PROJECT']}'")
+    print("   Open https://smith.langchain.com to view traces.")
 
 if __name__ == "__main__":
     main()
